@@ -5,20 +5,19 @@ using System.Timers;
 using System.Text.Json;
 using System.Runtime.Versioning;
 
-[SupportedOSPlatform("windows")]  // Dodanie atrybutu na poziomie klasy
+[SupportedOSPlatform("windows")] 
 class Program
 {
-    static System.Timers.Timer timer = new System.Timers.Timer(5000); // Inicjalizacja timera z interwałem 5 sekund
+    static System.Timers.Timer timer = new System.Timers.Timer(5000); 
     static PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
     static PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-    static UserConfig config = new UserConfig { CpuThreshold = 80, MemoryThreshold = 500 }; // Inicjalizacja domyślnej konfiguracji
+    static UserConfig config = new UserConfig { CpuThreshold = 80, MemoryThreshold = 500 }; 
     static string configFilePath = "user_config.json";
 
     static void Main(string[] args)
     {
         config = UserConfig.LoadConfig(configFilePath);
 
-        // Konfiguracja timera (inicjalizacja już została wykonana przy deklaracji)
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
         timer.Enabled = true;
@@ -29,7 +28,7 @@ class Program
         config.SaveConfig(configFilePath);
     }
 
-    private static void OnTimedEvent(object? source, ElapsedEventArgs e)  // Dopuszczenie wartości null dla parametru source
+    private static void OnTimedEvent(object? source, ElapsedEventArgs e)  
     {
         float cpuUsage = cpuCounter.NextValue();
         float availableMemory = ramCounter.NextValue();
