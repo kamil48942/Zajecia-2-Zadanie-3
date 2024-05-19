@@ -20,6 +20,7 @@ public class UserConfig
         }
     }
 
+    
     public void SaveConfig(string filePath)
     {
         string json = JsonSerializer.Serialize(this);
